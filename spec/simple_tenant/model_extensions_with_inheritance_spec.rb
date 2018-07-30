@@ -5,7 +5,8 @@ RSpec.describe 'SimpleTenant::ModelExtensions with inheritance' do
     include SimpleTenant::ModelExtensions
 
     field :name, type: String
-    field :tenant_id, type: Integer
+
+    tenanted_by :account_id
   end
 
   class AModel < BaseModel
@@ -25,7 +26,7 @@ RSpec.describe 'SimpleTenant::ModelExtensions with inheritance' do
 
       document = AModel.new
 
-      expect(document.tenant_id).to be_nil
+      expect(document.account_id).to be_nil
     end
 
     it 'sets tenant as current tenant if current tenant is set' do
@@ -33,7 +34,7 @@ RSpec.describe 'SimpleTenant::ModelExtensions with inheritance' do
 
       document = AModel.new
 
-      expect(document.tenant_id).to equal(828)
+      expect(document.account_id).to equal(828)
     end
 
   end
@@ -45,7 +46,7 @@ RSpec.describe 'SimpleTenant::ModelExtensions with inheritance' do
 
       document = AModel.create
 
-      expect(document.reload.tenant_id).to be_nil
+      expect(document.reload.account_id).to be_nil
     end
 
     it 'saves tenant as current tenant if current tenant is set' do
@@ -53,7 +54,7 @@ RSpec.describe 'SimpleTenant::ModelExtensions with inheritance' do
 
       document = AModel.create
 
-      expect(document.reload.tenant_id).to eq(828)
+      expect(document.reload.account_id).to eq(828)
     end
 
   end
@@ -61,8 +62,8 @@ RSpec.describe 'SimpleTenant::ModelExtensions with inheritance' do
   context 'document query' do
 
     before do
-      AModel.create name: 'document with tenant', tenant_id: 828
-      AModel.create name: 'document with another tenant', tenant_id: 1113
+      AModel.create name: 'document with tenant', account_id: 828
+      AModel.create name: 'document with another tenant', account_id: 1113
       AModel.create name: 'document without tenant'
     end
 

@@ -4,6 +4,14 @@ require 'mongoid'
 
 Mongoid.load!('spec/mongoid.yml', :test)
 
+# Mongoid.logger.level = Logger::DEBUG
+# Mongo::Logger.logger.level = Logger::DEBUG
+#
+# Mongoid.logger = Logger.new(STDOUT)
+# Mongo::Logger.logger = Logger.new(STDOUT)
+#
+# Mongo::Monitoring::CommandLogSubscriber::LOG_STRING_LIMIT = 3000
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'

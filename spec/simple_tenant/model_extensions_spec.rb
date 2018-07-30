@@ -7,7 +7,8 @@ RSpec.describe SimpleTenant::ModelExtensions do
     field :name, type: String
     field :number, type: Integer
     field :text, type: String
-    field :tenant_id, type: Integer
+
+    tenanted_by :tenant_id
   end
 
   before do
