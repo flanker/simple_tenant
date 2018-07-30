@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'simple_tenant'
 require 'mongoid'
+require 'byebug'
 
 Mongoid.load!('spec/mongoid.yml', :test)
 
