@@ -1,5 +1,8 @@
 require 'bundler/setup'
 require 'simple_tenant'
+require 'mongoid'
+
+Mongoid.load!('spec/mongoid.yml', :test)
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

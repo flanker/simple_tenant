@@ -1,0 +1,6 @@
+test:
+  clients:
+    default:
+      hosts:
+        - localhost:27117
+      database: simple_tenant_test
