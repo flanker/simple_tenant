@@ -7,13 +7,16 @@ RSpec.describe SimpleTenant::ModelExtensions do
     field :name, type: String
     field :number, type: Integer
     field :text, type: String
+    field :deleted_at, type: Time
 
     tenanted_by :tenant_id
+
+    default_scope { where(deleted_at: nil) }
   end
 
   before do
     SimpleTenant.current_tenant = nil
-    TestModel.unscoped.destroy_all
+    TestModel.unscoped_all.destroy_all
   end
 
   context 'document initialization' do
@@ -76,6 +79,37 @@ RSpec.describe SimpleTenant::ModelExtensions do
 
       expect(TestModel.count).to eq(1)
       expect(TestModel.first.name).to eq('document with tenant')
+    end
+
+  end
+
+  context '#unscoped' do
+
+    before do
+      TestModel.create name: 'document with tenant', tenant_id: 828
+      TestModel.create name: 'document with another tenant', tenant_id: 1113
+      TestModel.create name: 'document with tenant but deleted', tenant_id: 828, deleted_at: Time.now
+      TestModel.create name: 'document without tenant'
+    end
+
+    it 'respects other scope' do
+      SimpleTenant.current_tenant = 828
+
+      expect(TestModel.count).to eq(1)
+      expect(TestModel.first.name).to eq('document with tenant')
+    end
+
+    it 'unscoped will unscope other scopes but still keep tenant scope' do
+      SimpleTenant.current_tenant = 828
+
+      expect(TestModel.unscoped.count).to eq(2)
+      expect(TestModel.unscoped.map(&:name)).to match_array(['document with tenant', 'document with tenant but deleted'])
+    end
+
+    it 'unscoped_all will unscope all scopes including tenant scope' do
+      SimpleTenant.current_tenant = 828
+
+      expect(TestModel.unscoped_all.count).to eq(4)
     end
 
   end

@@ -16,6 +16,14 @@ module SimpleTenant
 
         default_scope tenant_scope
         scope :tenanted, tenant_scope
+
+        class << self
+          alias_method :unscoped_all, :unscoped
+
+          def unscoped
+            unscoped_all.tenanted
+          end
+        end
       end
     end
 
