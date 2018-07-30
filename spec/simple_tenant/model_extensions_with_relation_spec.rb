@@ -10,7 +10,7 @@ RSpec.describe 'SimpleTenant::ModelExtensions with relation' do
     include Mongoid::Document
     include SimpleTenant::ModelExtensions
 
-    tenanted_by :account, belongs_to: true
+    tenanted_by :account
 
     field :title, type: String
     field :content, type: String

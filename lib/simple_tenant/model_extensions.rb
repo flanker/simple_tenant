@@ -21,8 +21,8 @@ module SimpleTenant
 
     module ClassMethods
 
-      def tenanted_by field_name, type: Integer, belongs_to: false
-        if belongs_to
+      def tenanted_by field_name, type: Integer
+        if const_defined?(field_name.to_s.classify)
           belongs_to field_name
           @tenant_field_name = "#{field_name}_id"
         else
