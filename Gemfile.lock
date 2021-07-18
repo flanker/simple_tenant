@@ -49,7 +49,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16)
+  bundler (>= 2.2.10)
   byebug
   mongoid
   rake (~> 13.0)
@@ -57,4 +57,4 @@ DEPENDENCIES
   simple_tenant!
 
 BUNDLED WITH
-   1.16.1
+   2.2.24
