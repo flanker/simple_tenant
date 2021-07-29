@@ -43,7 +43,7 @@ Model definition:
 
 and:
 
-```
+```ruby
 TestModel.create name: 'document with tenant', tenant_id: 828
 TestModel.create name: 'document with another tenant', tenant_id: 1113
 TestModel.create name: 'document without tenant'
